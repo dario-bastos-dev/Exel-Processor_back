@@ -16,6 +16,7 @@ dist-ssr
 prisma/migrations
 prisma/sheet.db
 prisma/sheet.db-jornal
+uploads
 
 # Editor directories and files
 .vscode/*
