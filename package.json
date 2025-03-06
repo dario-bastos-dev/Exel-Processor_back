@@ -1,48 +1,47 @@
 {
-  "name": "exel_processor-back",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "src/server.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dario-bastos-dev/Exel-Processor.git"
-  },
-  "keywords": [],
-  "author": "Dário Bastos",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dario-bastos-dev/Exel-Processor/issues"
-  },
-  "scripts": {
-    "start": "tsx watch src/server.ts",
-    "build": "tsc -b",
-    "lint": "npx lint-staged",
-    "prepare": "husky"
-  },
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^6.4.1",
-    "cors": "^2.8.5",
-    "exceljs": "^4.4.0",
-    "express": "^4.21.2",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "multer": "^1.4.5-lts.1",
-    "prisma": "^6.4.1"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "@types/multer": "^1.4.12",
-    "tsx": "^4.19.3"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "biome check --write --organize-imports-enabled=true --no-errors-on-unmatched",
-      "biome format --write --no-errors-on-unmatched"
-    ],
-    "*.json": [
-      "biome format --write --no-errors-on-unmatched"
-    ]
-  }
+	"name": "exel_processor-back",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "src/server.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dario-bastos-dev/Exel-Processor.git"
+	},
+	"keywords": [],
+	"author": "Dário Bastos",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/dario-bastos-dev/Exel-Processor/issues"
+	},
+	"scripts": {
+		"start": "tsx watch src/server.ts",
+		"build": "prisma migrate dev && prisma generate ",
+		"lint": "npx lint-staged",
+		"prepare": "husky"
+	},
+	"description": "",
+	"dependencies": {
+		"@prisma/client": "^6.4.1",
+		"cors": "^2.8.5",
+		"exceljs": "^4.4.0",
+		"express": "^4.21.2",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.4.3",
+		"multer": "^1.4.5-lts.1",
+		"prisma": "^6.4.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^5.0.0",
+		"@types/multer": "^1.4.12",
+		"tsx": "^4.19.3"
+	},
+	"lint-staged": {
+		"*.{js,ts}": [
+			"biome check --write --organize-imports-enabled=true --no-errors-on-unmatched",
+			"biome format --write --no-errors-on-unmatched"
+		],
+		"*.json": ["biome format --write --no-errors-on-unmatched"]
+	}
 }
