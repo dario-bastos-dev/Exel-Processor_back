@@ -1,28 +1,25 @@
+import cors from 'cors';
 // server/server.ts
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
-import * as fileController from './controllers/exel-controller';
 import upload from './configs/multer';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import * as fileController from './controllers/exel-controller';
+import ensureUploadDirectoryExists from './utils/create-diretory';
 
 const app = express();
 
 app.use(express.json());
 
 // Configurar CORS
-app.use(cors({
-  origin: '*', // Permitir requisições do frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type'], // Headers permitidos
-  credentials: true // Permitir cookies
-}));
+app.use(
+	cors({
+		origin: '*', // Permitir requisições do frontend
+		methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+		allowedHeaders: ['Content-Type'], // Headers permitidos
+		credentials: true, // Permitir cookies
+	}),
+);
 
-// Servir arquivos estáticos do build do React
-app.use(express.static(path.join(__dirname, '../dist')));
+ensureUploadDirectoryExists();
 
 app.post('/upload', upload.single('file'), fileController.uploadFile);
 app.post('/search', fileController.searchExcelFile);
