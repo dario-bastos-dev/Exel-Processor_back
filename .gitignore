@@ -9,6 +9,11 @@ out
 dist
 *.tgz
 
+# Prisma
+prisma/sheet.db
+prisma/sheet.db-journal
+prisma/migrations/
+
 # code coverage
 coverage
 *.lcov
