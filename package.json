@@ -1,8 +1,8 @@
 {
-	"name": "exel_processor-back",
-	"version": "1.0.0",
+	"name": "exel-processor-back",
+	"version": "2.0.0",
+	"module": "server.ts",
 	"type": "module",
-	"main": "src/server.ts",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/dario-bastos-dev/Exel-Processor.git"
@@ -14,28 +14,26 @@
 		"url": "https://github.com/dario-bastos-dev/Exel-Processor/issues"
 	},
 	"scripts": {
-		"start": "tsx watch src/server.ts",
+		"start": "bun --watch src/server.ts",
 		"build": "prisma migrate dev && prisma generate ",
-		"lint": "npx lint-staged",
+		"lint": "lint-staged",
 		"prepare": "husky"
 	},
-	"description": "",
-	"dependencies": {
-		"@prisma/client": "^6.4.1",
-		"cors": "^2.8.5",
-		"exceljs": "^4.4.0",
-		"express": "^4.21.2",
-		"husky": "^9.1.7",
-		"lint-staged": "^15.4.3",
-		"multer": "^1.4.5-lts.1",
-		"prisma": "^6.4.1"
-	},
 	"devDependencies": {
+		"@prisma/client": "^6.5.0",
+		"@types/bun": "latest",
+		"@types/multer": "^1.4.12"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@types/cors": "^2.8.17",
-		"@types/express": "^5.0.0",
-		"@types/multer": "^1.4.12",
-		"tsx": "^4.19.3"
+		"exceljs": "^4.4.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.0",
+		"multer": "^1.4.5-lts.1",
+		"prisma": "^6.5.0"
 	},
 	"lint-staged": {
 		"*.{js,ts}": [
