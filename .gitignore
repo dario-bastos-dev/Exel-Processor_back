@@ -12,7 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
-.en
+.env
 prisma/migrations
 prisma/sheet.db
 prisma/sheet.db-jornal

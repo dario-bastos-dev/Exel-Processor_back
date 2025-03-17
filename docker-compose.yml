@@ -1,27 +1,31 @@
-version: '3.8'
 name: exel-processor
-
 services:
   backend:
     image: dariobastosdev/exel-processor:back1.0.0
+    networks:
+      - web
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      - NODE_ENV=production
       - DATABASE_URL=file:./sheet.db
     volumes:
-      - ./data:/app/src
-      - ./uploads:/usr/src/app/uploads
+      - sqlite_data:/usr/src/app/prisma/
+      - C:\Users\jdari\OneDrive\Desktop\Programas\Github\Exel_Processor\back\uploads:/usr/src/app/uploads
     restart: unless-stopped
 
   frontend:
     image: dariobastosdev/exel-processor:front1.0.0
     ports:
-      - "80:80"
+      - '80:80'
+    networks:
+      - web
     depends_on:
       - backend
     restart: unless-stopped
 
+networks:
+  web:
+    driver: bridge
+
 volumes:
-  data:
-  uploads:
+  sqlite_data:
