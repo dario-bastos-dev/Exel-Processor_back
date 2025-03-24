@@ -10,7 +10,7 @@ services:
       - DATABASE_URL=file:./sheet.db
     volumes:
       - sqlite_data:/usr/src/app/prisma/
-      - C:\Users\jdari\OneDrive\Desktop\Programas\Github\Exel_Processor\back\uploads:/usr/src/app/uploads
+      - .\uploads:/usr/src/app/uploads
     restart: unless-stopped
 
   frontend:
