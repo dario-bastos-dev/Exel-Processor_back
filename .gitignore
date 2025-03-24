@@ -1,30 +1,42 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-.husky
+# dependencies (bun install)
 node_modules
-dist
-dist-ssr
-*.local
-.env
-prisma/migrations
-prisma/sheet.db
-prisma/sheet.db-jornal
-uploads
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+# commit checks
+.husky
+
+# output
+out
+dist
+*.tgz
+
+# Prisma
+prisma/sheet.db
+prisma/sheet.db-journal
+prisma/migrations/
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+
+# IntelliJ based IDEs
 .idea
+
+# Finder (MacOS) folder config
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
