@@ -14,9 +14,9 @@
 		"url": "https://github.com/dario-bastos-dev/Exel-Processor/issues"
 	},
 	"scripts": {
-		"start": "bun --watch run src/server.ts",
-		"build": "bunx prisma migrate dev && prisma generate ",
-		"lint": "bunx lint-staged",
+		"start": "--watch run src/server.ts",
+		"build": "prisma migrate dev && prisma generate ",
+		"lint": "lint-staged",
 		"prepare": "husky"
 	},
 	"devDependencies": {
@@ -48,5 +48,15 @@
 			"biome format --write --no-errors-on-unmatched"
 		],
 		"*.json": ["biome format --write --no-errors-on-unmatched"]
+	},
+	"packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"@prisma/client",
+			"@prisma/engines",
+			"esbuild",
+			"prisma"
+		]
 	}
 }
