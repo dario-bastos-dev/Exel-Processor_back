@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
-import router from './router';
+import fileRouter from './routes/files/router';
+import userRouter from './routes/users/routes';
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(
 	}),
 );
 
-app.use(router);
+app.use(userRouter);
+app.use(fileRouter);
 
 app.listen(3000, () => {
 	console.log('Server started on http://localhost:3000');

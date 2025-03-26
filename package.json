@@ -15,14 +15,17 @@
 	},
 	"scripts": {
 		"start": "bun --watch run src/server.ts",
-		"build": "prisma migrate dev && prisma generate ",
+		"build": "bunx prisma migrate dev && prisma generate ",
 		"lint": "bunx lint-staged",
 		"prepare": "husky"
 	},
 	"devDependencies": {
+		"@types/bcryptjs": "^3.0.0",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.1",
-		"@types/multer": "^1.4.12"
+		"@types/jsonwebtoken": "^9.0.9",
+		"@types/multer": "^1.4.12",
+		"bcryptjs": "^3.0.2"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.2"
@@ -31,10 +34,10 @@
 		"@biomejs/biome": "^1.9.4",
 		"@prisma/client": "^6.5.0",
 		"cors": "^2.8.5",
-		"debug": "^4.4.0",
 		"exceljs": "^4.4.0",
 		"express": "^4.21.2",
 		"husky": "^9.1.7",
+		"jsonwebtoken": "^9.0.2",
 		"lint-staged": "^15.5.0",
 		"multer": "^1.4.5-lts.2",
 		"prisma": "^6.5.0"

@@ -7,8 +7,13 @@ export default class ExelController implements FileController {
 
 	public async uploadFile(req: Request, res: Response): Promise<void> {
 		const file = req.file;
-		if (!file) {
+		const { userId } = req.params;
+		if (file === undefined) {
 			Response.json({ error: 'No file uploaded' }, { status: 400 });
+			return;
+		}
+		if (userId === undefined) {
+			Response.json({ error: 'No user informed' }, { status: 400 });
 			return;
 		}
 
@@ -17,6 +22,7 @@ export default class ExelController implements FileController {
 		const { response, status } = await this.exelService.uploadFile(
 			filename,
 			path,
+			userId,
 		);
 
 		res.status(status).json(response);

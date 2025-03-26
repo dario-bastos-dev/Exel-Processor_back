@@ -13,8 +13,12 @@ import type {
 export default class ExelService implements FileService {
 	private exelModel: ExelModel = new ExelModel();
 
-	public async uploadFile(filename: string, path: string) {
-		const { data, error } = await this.exelModel.uploadFile(filename, path);
+	public async uploadFile(filename: string, path: string, userId: string) {
+		const { data, error } = await this.exelModel.uploadFile(
+			filename,
+			path,
+			userId,
+		);
 
 		let response: FileResponse;
 		if (error !== null) {
@@ -32,7 +36,10 @@ export default class ExelService implements FileService {
 		response = {
 			status: 'success',
 			message: 'Planilha salva com sucesso',
-			data: data,
+			data: {
+				user: null,
+				sheet: data,
+			},
 			error: null,
 		};
 		return { response, status: 200 };
@@ -57,7 +64,10 @@ export default class ExelService implements FileService {
 		response = {
 			status: 'success',
 			message: 'Planilhas encontradas com sucesso',
-			data: data,
+			data: {
+				user: null,
+				sheet: data,
+			},
 			error: null,
 		};
 		return { response, status: 200 };
@@ -126,7 +136,10 @@ export default class ExelService implements FileService {
 		response = {
 			status: 'success',
 			message: 'Planilhas encontradas com sucesso',
-			data: searchResults,
+			data: {
+				user: null,
+				sheet: searchResults,
+			},
 			header: headers,
 			error: null,
 		};
@@ -176,7 +189,10 @@ export default class ExelService implements FileService {
 		response = {
 			status: 'success',
 			message: 'Planilhas encontradas com sucesso',
-			data: headers,
+			data: {
+				user: null,
+				sheet: headers,
+			},
 			error: null,
 		};
 		return { response, status: 200 };
@@ -203,7 +219,10 @@ export default class ExelService implements FileService {
 		response = {
 			status: 'success',
 			message: 'Planilha deletada com sucesso',
-			data: data,
+			data: {
+				user: null,
+				sheet: data,
+			},
 			error: null,
 		};
 		return { response, status: 200 };

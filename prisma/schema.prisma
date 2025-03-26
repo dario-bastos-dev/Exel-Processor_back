@@ -14,7 +14,22 @@ model ExcelFile {
   id        String   @id @default(uuid())
   name      String
   path      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("excel_files")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  name       String
+  email      String      @unique
+  password   String
+  excelFiles ExcelFile[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("users")
 }

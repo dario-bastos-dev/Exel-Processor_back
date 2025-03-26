@@ -29,10 +29,10 @@ export default class ExelModel implements FileModel {
 	}
 
 	// POST: Upload file
-	public async uploadFile(filename: string, path: string) {
+	public async uploadFile(filename: string, path: string, userId: string) {
 		this.dataCleaning();
 
-		if (!filename || !path) {
+		if (filename == undefined || path == undefined || userId == undefined) {
 			this._error.push('No file uploaded');
 			return { data: null, error: this._error };
 		}
@@ -41,7 +41,8 @@ export default class ExelModel implements FileModel {
 			this._file = await prisma.excelFile.create({
 				data: {
 					name: filename,
-					path: path,
+					path,
+					userId,
 				},
 			});
 
