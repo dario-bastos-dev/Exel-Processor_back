@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import prisma from '../configs/prisma';
+import prisma from '../../../configs/prisma';
 import type { FileModel, FileSheet } from '../types/sheet';
 
 export default class ExelModel implements FileModel {

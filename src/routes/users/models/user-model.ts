@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import prisma from '../configs/prisma';
+import prisma from '../../../configs/prisma';
 import type { User } from '../types/user';
 
 export default class UserModel {

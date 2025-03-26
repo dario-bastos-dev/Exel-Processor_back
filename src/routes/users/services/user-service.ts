@@ -1,4 +1,4 @@
-import { generateToken } from '../configs/jwt';
+import { generateToken } from '../../../configs/jwt';
 import UserModel from '../models/user-model';
 import type { User, UserResponse } from '../types/user';
 
