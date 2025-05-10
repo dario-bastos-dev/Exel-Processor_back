@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import upload from '../../configs/multer';
 import ExelController from './controllers/file-controller';
+import { authMiddleware } from '../../middlewares/auth';
 
 const fileRouter = Router();
 
@@ -8,15 +9,15 @@ const fileRouter = Router();
 const exelController: ExelController = new ExelController();
 
 fileRouter.post(
-	'/upload/:id',
-	upload.single('file'),
-	exelController.uploadFile,
+  '/upload/:id',
+  upload.single('file'),
+  exelController.uploadFile
 );
 
-fileRouter.get('/search', exelController.getSearchExcelFile);
-fileRouter.get('/files', exelController.getExcel);
-fileRouter.get('/headers', exelController.getFileHeaders);
+fileRouter.get('/search', authMiddleware, exelController.getSearchExcelFile);
+fileRouter.get('/files', authMiddleware, exelController.getExcel);
+fileRouter.get('/headers', authMiddleware, exelController.getFileHeaders);
 
-fileRouter.delete('/files/:id', exelController.deleteFile);
+fileRouter.delete('/files/:id', authMiddleware, exelController.deleteFile);
 
 export default fileRouter;

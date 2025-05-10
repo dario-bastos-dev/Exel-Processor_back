@@ -3,72 +3,79 @@ import ExelService from '../services/file-service';
 import type { FileController } from '../types/sheet';
 
 export default class ExelController implements FileController {
-	private exelService: ExelService = new ExelService();
 
-	public async uploadFile(req: Request, res: Response): Promise<void> {
-		const file = req.file;
-		const { userId } = req.params;
-		if (file === undefined) {
-			Response.json({ error: 'No file uploaded' }, { status: 400 });
-			return;
-		}
-		if (userId === undefined) {
-			Response.json({ error: 'No user informed' }, { status: 400 });
-			return;
-		}
+  public async uploadFile(req: Request, res: Response): Promise<void> {
+    const exelService = new ExelService();
+    const file = req.file;
 
-		const { filename, path } = file;
+    console.log('file:', file);
+    
+    const { userId } = req.params;
+    if (file === undefined) {
+      Response.json({ error: 'No file uploaded' }, { status: 400 });
+      return;
+    }
+    if (userId === undefined) {
+      Response.json({ error: 'No user informed' }, { status: 400 });
+      return;
+    }
 
-		const { response, status } = await this.exelService.uploadFile(
-			filename,
-			path,
-			userId,
-		);
+    const { filename, path } = file;
 
-		res.status(status).json(response);
-	}
+    const { response, status } = await exelService.uploadFile(
+      filename,
+      path,
+      userId
+    );
 
-	public async getExcel(_req: Request, res: Response) {
-		const { response, status } = await this.exelService.getExcelFiles();
+    res.status(status).json(response);
+  }
 
-		res.status(status).json(response);
-	}
+  public async getExcel(_req: Request, res: Response) {
+    const exelService = new ExelService();
+    const { response, status } = await exelService.getExcelFiles();
 
-	public async getSearchExcelFile(req: Request, res: Response) {
-		const { fileId, columnIndex, searchValues } = req.body;
+    res.status(status).json(response);
+  }
 
-		const { response, status } = await this.exelService.searchExcelFile(
-			fileId,
-			columnIndex,
-			searchValues,
-		);
+  public async getSearchExcelFile(req: Request, res: Response) {
+    const exelService = new ExelService();
+    const { fileId, columnIndex, searchValues } = req.body;
 
-		res.status(status).json(response);
-	}
+    const { response, status } = await exelService.searchExcelFile(
+      fileId,
+      columnIndex,
+      searchValues
+    );
 
-	public async getFileHeaders(req: Request, res: Response) {
-		const { id } = req.params;
+    res.status(status).json(response);
+  }
 
-		if (!id) {
-			Response.json({ error: 'No file uploaded' }, { status: 400 });
-			return;
-		}
+  public async getFileHeaders(req: Request, res: Response) {
+    const exelService = new ExelService();
+    const { id } = req.params;
 
-		const { response, status } = await this.exelService.getFileHeaders(id);
+    if (!id) {
+      Response.json({ error: 'No file uploaded' }, { status: 400 });
+      return;
+    }
 
-		res.status(status).json(response);
-	}
+    const { response, status } = await exelService.getFileHeaders(id);
 
-	public async deleteFile(req: Request, res: Response) {
-		const { id } = req.params;
+    res.status(status).json(response);
+  }
 
-		if (!id) {
-			Response.json({ error: 'No file uploaded' }, { status: 400 });
-			return;
-		}
+  public async deleteFile(req: Request, res: Response) {
+    const exelService = new ExelService();
+    const { id } = req.params;
 
-		const { response, status } = await this.exelService.deleteFile(id);
+    if (!id) {
+      Response.json({ error: 'No file uploaded' }, { status: 400 });
+      return;
+    }
 
-		res.status(status).json(response);
-	}
+    const { response, status } = await exelService.deleteFile(id);
+
+    res.status(status).json(response);
+  }
 }
