@@ -1,25 +1,25 @@
-import type { Request, Response, NextFunction } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { verifyToken } from '../configs/jwt';
 
 export function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction,
 ) {
-  const authorization = req.headers['authorization'];
+	const authorization = req.headers['authorization'];
 
-  if (!authorization) {
-    res.status(401).json({ message: 'Not add token!' });
-    return;
-  }
+	if (!authorization) {
+		res.status(401).json({ message: 'Not add token!' });
+		return;
+	}
 
-  const token = authorization.split(' ')[1] as string;
-  const valid = verifyToken(token);
+	const token = authorization.split(' ')[1] as string;
+	const valid = verifyToken(token);
 
-  if (!valid) {
-    res.status(401).json({ message: 'Invalid token!' });
-    return;
-  }
+	if (!valid) {
+		res.status(401).json({ message: 'Invalid token!' });
+		return;
+	}
 
-  next(); // Proceed to the next middleware or route handler
+	next(); // Proceed to the next middleware or route handler
 }
