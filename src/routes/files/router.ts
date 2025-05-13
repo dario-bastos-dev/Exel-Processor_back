@@ -14,9 +14,17 @@ fileRouter.post(
 	exelController.uploadFile,
 );
 
-fileRouter.get('/search', authMiddleware, exelController.getSearchExcelFile);
-fileRouter.get('/files', authMiddleware, exelController.getExcel);
-fileRouter.get('/headers', authMiddleware, exelController.getFileHeaders);
+fileRouter.post(
+	'/files/:id/search',
+	authMiddleware,
+	exelController.getSearchExcelFile,
+);
+fileRouter.get('/files/:id', authMiddleware, exelController.getExcel);
+fileRouter.get(
+	'/files/:id/:file/headers',
+	authMiddleware,
+	exelController.getFileHeaders,
+);
 
 fileRouter.delete('/files/:id', authMiddleware, exelController.deleteFile);
 

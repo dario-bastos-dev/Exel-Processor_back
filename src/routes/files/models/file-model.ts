@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import e from 'cors';
 import prisma from '../../../configs/prisma';
 import type { FileModel, FileSheet } from '../types/sheet';
 
@@ -58,11 +59,11 @@ export default class ExelModel implements FileModel {
 	}
 
 	// POST: search file
-	public async searchExcelFile(fileId: string) {
+	public async searchExcelFile(id: string) {
 		this.dataCleaning();
 
 		try {
-			this._file = await prisma.excelFile.findUnique({ where: { id: fileId } });
+			this._file = await prisma.excelFile.findUnique({ where: { id } });
 
 			if (this._file == undefined) {
 				this._error.push('Arquivo não encontrado');
@@ -76,18 +77,37 @@ export default class ExelModel implements FileModel {
 	}
 
 	// GET: All files
-	public async getExelFiles() {
+	public async getExelFiles(id: string) {
 		this.dataCleaning();
 
 		try {
-			const files = await prisma.excelFile.findMany();
+			const search = await prisma.user.findUnique({
+				where: { id },
+				include: { excelFiles: true },
+			});
 
-			if (files == undefined) {
+			if (search == undefined) {
 				this._error.push('Error uploading file');
 				return { data: null, error: this._error };
 			}
+			const filesUser = {
+				user: {
+					id: search.id,
+					name: search.name,
+					email: search.email,
+					createdAt: search.createdAt,
+					updatedAt: search.updatedAt,
+				},
+				sheet: search.excelFiles.map((file) => ({
+					id: file.id,
+					name: file.name,
+					path: file.path,
+					createdAt: file.createdAt,
+					updatedAt: file.updatedAt,
+				})),
+			};
 
-			return { data: files, error: null };
+			return { data: filesUser, error: null };
 		} catch (error: unknown) {
 			return this.emmiterError(error);
 		}

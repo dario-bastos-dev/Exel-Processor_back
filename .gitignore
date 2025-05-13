@@ -9,6 +9,10 @@ out
 dist
 *.tgz
 
+# Uploads
+src/uploads
+src/uploads/*
+
 # Prisma
 prisma/sheet.db
 prisma/sheet.db-journal

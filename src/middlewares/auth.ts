@@ -21,5 +21,7 @@ export function authMiddleware(
 		return;
 	}
 
+	res.locals.user = valid;
+
 	next(); // Proceed to the next middleware or route handler
 }

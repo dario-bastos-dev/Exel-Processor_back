@@ -13,6 +13,7 @@ import type {
 export default class ExelService implements FileService {
 	public async uploadFile(filename: string, path: string, userId: string) {
 		const exelModel = new ExelModel();
+
 		const { data, error } = await exelModel.uploadFile(filename, path, userId);
 
 		let response: FileResponse;
@@ -40,9 +41,9 @@ export default class ExelService implements FileService {
 		return { response, status: 200 };
 	}
 
-	public async getExcelFiles() {
+	public async getExcelFiles(id: string) {
 		const exelModel = new ExelModel();
-		const { data, error } = await exelModel.getExelFiles();
+		const { data, error } = await exelModel.getExelFiles(id);
 
 		let response: AllFilesResponse;
 		if (error !== null) {
@@ -57,12 +58,13 @@ export default class ExelService implements FileService {
 			};
 			return { response, status: 404 };
 		}
+
 		response = {
 			status: 'success',
 			message: 'Planilhas encontradas com sucesso',
 			data: {
-				user: null,
-				sheet: data,
+				user: data.user,
+				sheet: data.sheet,
 			},
 			error: null,
 		};
@@ -96,7 +98,6 @@ export default class ExelService implements FileService {
 		await workbook.xlsx.readFile(path.resolve(excelFile.path));
 		const worksheet = workbook.worksheets[0];
 
-		const headers: string[] = [];
 		const data: any[][] = [];
 
 		if (worksheet == undefined) {
@@ -113,9 +114,7 @@ export default class ExelService implements FileService {
 		}
 
 		worksheet.eachRow((row, rowNumber) => {
-			if (rowNumber === 1) {
-				row.eachCell((cell) => headers.push(cell.text));
-			} else {
+			if (rowNumber !== 1) {
 				const rowData: any[] = [];
 				row.eachCell({ includeEmpty: true }, (cell) => rowData.push(cell.text));
 				data.push(rowData);
@@ -136,15 +135,27 @@ export default class ExelService implements FileService {
 				user: null,
 				sheet: searchResults,
 			},
-			header: headers,
 			error: null,
 		};
 		return { response, status: 200 };
 	}
 
-	public async getFileHeaders(id: string) {
+	public async getFileHeaders(id: string, file: string) {
 		const exelModel = new ExelModel();
-		const { data: excelFile, error } = await exelModel.getFileHeaders(id);
+
+		if (!id) {
+			const response: HeadersFileResponse = {
+				status: 'error',
+				message: 'Ocorreu um erro ao tentar buscar as planilhas',
+				data: null,
+				error: {
+					code: 404,
+					details: ['Usuario não encontrado'],
+				},
+			};
+			return { response, status: 404 };
+		}
+		const { data: excelFile, error } = await exelModel.getFileHeaders(file);
 
 		let response: HeadersFileResponse;
 
@@ -185,11 +196,12 @@ export default class ExelService implements FileService {
 
 		response = {
 			status: 'success',
-			message: 'Planilhas encontradas com sucesso',
+			message: 'Cabeçalhos encontrados com sucesso',
 			data: {
 				user: null,
-				sheet: headers,
+				sheet: null,
 			},
+			header: headers,
 			error: null,
 		};
 		return { response, status: 200 };

@@ -1,3 +1,5 @@
+import type { CellValue } from 'exceljs';
+
 // Interface de retorno da função
 export type Return<T> =
 	| { data: null; error: string[] }
@@ -12,7 +14,7 @@ export type ResponseReq<U, S> = {
 	status: string;
 	message: string;
 	data: Data<U, S> | null;
-	header?: string[];
+	header?: CellValue[];
 	token?: string;
 	error: { code: number; details: string[] } | null;
 };

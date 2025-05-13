@@ -7,38 +7,48 @@ export default class ExelController implements FileController {
 		const exelService = new ExelService();
 		const file = req.file;
 
-		console.log('file:', file);
-
-		const { userId } = req.params;
+		const { id } = req.params;
 		if (file === undefined) {
 			Response.json({ error: 'No file uploaded' }, { status: 400 });
 			return;
 		}
-		if (userId === undefined) {
+		if (id === undefined) {
 			Response.json({ error: 'No user informed' }, { status: 400 });
 			return;
 		}
 
 		const { filename, path } = file;
 
-		const { response, status } = await exelService.uploadFile(
+		const { response } = await exelService.uploadFile(
 			filename,
 			path,
-			userId,
+			id,
 		);
 
-		res.status(status).json(response);
+		res.json(response);
 	}
 
-	public async getExcel(_req: Request, res: Response) {
+	public async getExcel(req: Request, res: Response) {
 		const exelService = new ExelService();
-		const { response, status } = await exelService.getExcelFiles();
+		const { id } = req.params;
+		if (!id) {
+			Response.json({ error: 'No file uploaded' }, { status: 400 });
+			return;
+		}
 
-		res.status(status).json(response);
+		const { response } = await exelService.getExcelFiles(id);
+
+		res.json(response);
 	}
 
 	public async getSearchExcelFile(req: Request, res: Response) {
 		const exelService = new ExelService();
+		const { id } = req.params;
+
+		if (!id) {
+			Response.json({ error: 'Usuário não encontrado' }, { status: 400 });
+			return;
+		}
 		const { fileId, columnIndex, searchValues } = req.body;
 
 		const { response, status } = await exelService.searchExcelFile(
@@ -52,14 +62,17 @@ export default class ExelController implements FileController {
 
 	public async getFileHeaders(req: Request, res: Response) {
 		const exelService = new ExelService();
-		const { id } = req.params;
+		const { id, file } = req.params;
 
 		if (!id) {
-			Response.json({ error: 'No file uploaded' }, { status: 400 });
+			Response.json({ error: 'Sem usuário especificado' }, { status: 400 });
+			return;
+		} else if (!file) {
+			Response.json({ error: 'Sem arquivo especificado' }, { status: 400 });
 			return;
 		}
 
-		const { response, status } = await exelService.getFileHeaders(id);
+		const { response, status } = await exelService.getFileHeaders(id, file);
 
 		res.status(status).json(response);
 	}
