@@ -19,11 +19,7 @@ export default class ExelController implements FileController {
 
 		const { filename, path } = file;
 
-		const { response } = await exelService.uploadFile(
-			filename,
-			path,
-			id,
-		);
+		const { response } = await exelService.uploadFile(filename, path, id);
 
 		res.json(response);
 	}
